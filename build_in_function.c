@@ -308,7 +308,6 @@
     "\n DEFVAR LF@param2"                            \
     "\n DEFVAR LF@strlen"                            \
     "\n DEFVAR LF@bool"                              \
-    "\n DEFVAR LF@char"                              \
     "\n DEFVAR LF@type"                              \
     "\n MOVE LF@param2 LF@%2"                        \
     "\n MOVE LF@retval int@0"                        \
@@ -325,7 +324,8 @@
     "\n CALL $ifj.strlen"                            \
     "\n MOVE LF@strlen TF@retval"                    \
     "\n LT LF@bool LF@param2 LF@strlen"              \
-    "\n JUMPIFEQ LF@bool bool@false"                 \
+    "\n JUMPIFEQ ifj.ord_end LF@bool bool@false"     \
+    "\n STRING2INT LF@retval LF@param1 LF@param2"    \
     "\n LABEL ifj.ord_end"                           \
     "\n POPFRAME"                                    \
     "\n RETURN"
