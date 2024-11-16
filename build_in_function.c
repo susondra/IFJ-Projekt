@@ -330,23 +330,16 @@
     "\n POPFRAME"                                    \
     "\n RETURN"
 
-#define FUNCTION_CHR                                    \
-    "\n // Built-in function ifj.length"                \
-    "\n LABEL $ifj.length"                              \
-    "\n PUSHFRAME"                                      \
-    "\n DEFVAR LF@retval"                               \
-    "\n DEFVAR LF@param"                                \
-    "\n DEFVAR LF@type"                                 \
-    "\n CREATEFRAME"                                    \
-    "\n DEFVAR TF@%1"                                   \
-    "\n MOVE TF@%1 LF@%1"                               \
-    "\n CALL $ifj.string"                               \
-    "\n MOVE LF@param TF@retval"                        \
-    "\n TYPE LF@type LF@param"                          \
-    "\n JUMPIFIEQ ifj.length_end LF@type string@string" \
-    "\n STRLEN LF@retval LF@param"                      \
-    "\n LABEL ifj.length_end"                           \
-    "\n POPFRAME"                                       \
+#define FUNCTION_CHR                  \
+    "\n // Built-in function ifj.chr" \
+    "\n LABEL $ifj.chr"               \
+    "\n PUSHFRAME"                    \
+    "\n DEFVAR LF@retval"             \
+    "\n DEFVAR LF@param"              \
+    "\n MOVE LF@param LF@%1"          \
+    "\n INT2CHAR LF@retval LF@param"  \
+    "\n LABEL ifj.chr_end"            \
+    "\n POPFRAME"                     \
     "\n RETURN"
 
 /*
