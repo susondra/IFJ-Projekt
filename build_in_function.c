@@ -168,7 +168,6 @@
     "\n CALL $ifj.string"                               \
     "\n MOVE LF@param1 TF@retval"                       \
     "\n CREATEFRAME"                                    \
-    "\n DEFVAR TF@%1"                                   \
     "\n MOVE TF@%1 LF@%2"                               \
     "\n CALL $ifj.string"                               \
     "\n MOVE LF@param2 TF@retval"                       \
@@ -244,23 +243,59 @@
     "\n DEFVAR LF@retval"                               \
     "\n DEFVAR LF@param1"                               \
     "\n DEFVAR LF@param2"                               \
+    "\n DEFVAR LF@char1"                                \
+    "\n DEFVAR LF@char2"                                \
     "\n DEFVAR LF@type"                                 \
+    "\n DEFVAR LF@index"                                \
+    "\n DEFVAR LF@strlen1"                              \
+    "\n DEFVAR LF@strlen2"                              \
+    "\n DEFVAR LF@bool"                                 \
+    "\n MOVE LF@index int@0"                            \
     "\n CREATEFRAME"                                    \
     "\n DEFVAR TF@%1"                                   \
     "\n MOVE TF@%1 LF@%1"                               \
     "\n CALL $ifj.string"                               \
-    "\n MOVE LF@param TF@param1"                        \
+    "\n MOVE LF@param1 TF@retval"                       \
     "\n CREATEFRAME"                                    \
-    "\n DEFVAR TF@%1"                                   \
-    "\n MOVE TF@%1 LF@%1"                               \
+    "\n MOVE TF@%1 LF@%2"                               \
     "\n CALL $ifj.string"                               \
-    "\n MOVE LF@param TF@param2"                        \
-    "\n TYPE LF@type LF@param"                          \
-    "\n JUMPIFIEQ ifj.length_end LF@type string@string" \
-    "\n STRLEN LF@retval LF@param"                      \
-    "\n LABEL ifj.length_end"                           \
+    "\n MOVE LF@param2 TF@retval"                       \
+    "\n CREATEFRAME"                                    \
+    "\n MOVE TF@%1 LF@param1"                           \
+    "\n CALL $ifj.strlen"                               \
+    "\n MOVE LF@strlen1 TF@retval"                      \
+    "\n CREATEFRAME"                                    \
+    "\n MOVE TF@%1 LF@param2"                           \
+    "\n CALL $ifj.strlen"                               \
+    "\n MOVE LF@strlen2 TF@retval"                      \
+    "\n TYPE LF@type LF@param1"                         \
+    "\n JUMPIFIEQ ifj.strcmp_end LF@type string@string" \
+    "\n TYPE LF@type LF@param2"                         \
+    "\n JUMPIFIEQ ifj.strcmp_end LF@type string@string" \
+    "\n LABEL ifj.strcmp_loop"                          \
+    "\n JUMPIFEQ ifj.strcmp_less LF@index LF@strlen1"   \
+    "\n JUMPIFEQ ifj.strcmp_more LF@index LF@strlen2"   \
+    "\n GETCHAR LF@char1 LF@param1 LF@index"            \
+    "\n GETCHAR LF@char2 LF@param2 LF@index"            \
+    "\n LT LF@bool LF@char1 LF@char2"                   \
+    "\n JUMPIFEQ ifj.strcmp_less LF@bool bool@true"     \
+    "\n GT LF@bool LF@char1 LF@char2"                   \
+    "\n JUMPIFEQ ifj.strcmp_more LF@bool bool@true"     \
+    "\n ADD LF@index LF@index int@1"                    \
+    "\n JUMP ifj.strcmp_loop"                           \
+    "\n LABEL ifj.strcmp_less"                          \
+    "\n JUMPIFEQ ifj.strcmp_equal LF@index LF@strlen2"  \
+    "\n MOVE LF@retval int@-1"                          \
+    "\n JUMP ifj.strcmp_end"                            \
+    "\n LABEL ifj.strcmp_more"                          \
+    "\n MOVE LF@retval int@1"                           \
+    "\n JUMP ifj.strcmp_end"                            \
+    "\n LABEL ifj.strcmp_equal"                         \
+    "\n MOVE LF@retval int@0"                           \
+    "\n LABEL ifj.strcmp_end"                           \
     "\n POPFRAME"                                       \
     "\n RETURN"
+
 #define FUNCTION_ORD                                    \
     "\n // Built-in function ifj.length"                \
     "\n LABEL $ifj.length"                              \
