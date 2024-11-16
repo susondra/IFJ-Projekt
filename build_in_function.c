@@ -296,24 +296,40 @@
     "\n POPFRAME"                                       \
     "\n RETURN"
 
-#define FUNCTION_ORD                                    \
-    "\n // Built-in function ifj.length"                \
-    "\n LABEL $ifj.length"                              \
-    "\n PUSHFRAME"                                      \
-    "\n DEFVAR LF@retval"                               \
-    "\n DEFVAR LF@param"                                \
-    "\n DEFVAR LF@type"                                 \
-    "\n CREATEFRAME"                                    \
-    "\n DEFVAR TF@%1"                                   \
-    "\n MOVE TF@%1 LF@%1"                               \
-    "\n CALL $ifj.string"                               \
-    "\n MOVE LF@param TF@retval"                        \
-    "\n TYPE LF@type LF@param"                          \
-    "\n JUMPIFIEQ ifj.length_end LF@type string@string" \
-    "\n STRLEN LF@retval LF@param"                      \
-    "\n LABEL ifj.length_end"                           \
-    "\n POPFRAME"                                       \
+/*
+?je dobře že index musí být meší jak strlen?
+*/
+#define FUNCTION_ORD                                 \
+    "\n // Built-in function ifj.ord"                \
+    "\n LABEL $ifj.ord"                              \
+    "\n PUSHFRAME"                                   \
+    "\n DEFVAR LF@retval"                            \
+    "\n DEFVAR LF@param1"                            \
+    "\n DEFVAR LF@param2"                            \
+    "\n DEFVAR LF@strlen"                            \
+    "\n DEFVAR LF@bool"                              \
+    "\n DEFVAR LF@char"                              \
+    "\n DEFVAR LF@type"                              \
+    "\n MOVE LF@param2 LF@%2"                        \
+    "\n MOVE LF@retval int@0"                        \
+    "\n CREATEFRAME"                                 \
+    "\n DEFVAR TF@%1"                                \
+    "\n MOVE TF@%1 LF@%1"                            \
+    "\n CALL $ifj.string"                            \
+    "\n MOVE LF@param1 TF@retval"                    \
+    "\n TYPE LF@type LF@param1"                      \
+    "\n JUMPIFIEQ ifj.ord_end LF@type string@string" \
+    "\n JUMPIFIEQ ifj.ord_end LF@param1 string@"     \
+    "\n CREATEFRAME"                                 \
+    "\n MOVE TF@%1 LF@param1"                        \
+    "\n CALL $ifj.strlen"                            \
+    "\n MOVE LF@strlen TF@retval"                    \
+    "\n LT LF@bool LF@param2 LF@strlen"              \
+    "\n JUMPIFEQ LF@bool bool@false"                 \
+    "\n LABEL ifj.ord_end"                           \
+    "\n POPFRAME"                                    \
     "\n RETURN"
+
 #define FUNCTION_CHR                                    \
     "\n // Built-in function ifj.length"                \
     "\n LABEL $ifj.length"                              \
