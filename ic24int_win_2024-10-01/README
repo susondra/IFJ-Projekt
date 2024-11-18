@@ -1,0 +1,9 @@
+ic24int - referencni interpret ciloveho jazyka IFJcode24
+verze 2024-09-29, 64-bitova
+
+Prubezne doplnovane informace najdete na Moodle predmetu IFJ na strance "Interpret cíloveho kodu IFJcode24".
+
+CHANGES:
+  * 2024-09-29:
+    * zverejnena prvni verze interpretu (upravena kompatibilita s jazykem Zig hlavne u instrukci READ a WRITE (uprava znamenka v exponentu v hexadec. vypisu, nil vypisuje jako null), podpora 64-bitoveho int)
+

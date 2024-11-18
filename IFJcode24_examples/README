@@ -1,0 +1,12 @@
+Tento adresář obsahuje několik příkladů programů napsaných v IFJcode24.
+
+Na Merlinovi lze vyzkoušet příkazem:
+
+/pub/courses/ifj/ic24int/linux/ic24int example.ifjcode
+
+Základní použití interpretu ic24int zjistíte příkazem:
+
+/pub/courses/ifj/ic24int/linux/ic24int --help
+
+Pokud chcete vidět detailnější stavy paměti, tak na zajímavá místa programu v IFJcode24 vložte ladící instrukci BREAK.
+
