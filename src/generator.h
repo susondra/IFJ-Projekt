@@ -10,15 +10,15 @@ bool gen_main_start();
 
 bool gen_main_end();
 
+bool gen_label(const char *function_id, int label_depth, int label_index);
+
 bool gen_function_start();
 
 bool gen_function_end();
 
-bool gen_call();
+bool gen_call(const char *function_id);
 
-bool gen_label();
-
-bool gen_if_start();
+bool gen_if_start(const char *function_id);
 
 bool gen_if_else();
 
