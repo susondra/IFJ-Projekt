@@ -393,12 +393,6 @@ Převede celočíselnou hodnotu na znak podle ASCII tabulky
     "\n POPFRAME"                     \
     "\n RETURN"
 
-bool print_built_in_functions()
-{
-
-    return true;
-}
-
 /*
 Vytvoří hlavičku funkce
 (label,pushframe)
