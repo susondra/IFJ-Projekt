@@ -13,6 +13,23 @@ ze standartního vstupu načte jeden řádek ukončený odřádkováním
  bez symbolu konce řádku, při špatném formátu vrátí null
 @return []u8 nebo nil@nil
 */
+#define FUNCTION_READ_STR                                \
+    "\n // Built-in function ifj.readstr"                \
+    "\n LABEL $ifj.readstr"                              \
+    "\n PUSHFRAME"                                       \
+    "\n DEFVAR LF@retval"                                \
+    "\n MOVE LF@retval nil@nil"                          \
+    "\n DEFVAR LF@input"                                 \
+    "\n DEFVAR LF@type"                                  \
+    "\n READ LF@input string"                            \
+    "\n TYPE LF@type LF@input"                           \
+    "\n JUMPIFNEQ ifj.readstr_end LF@type string@string" \
+    "\n MOVE LF@retval LF@input"                         \
+    "\n LABEL ifj.readstr_end"                           \
+    "\n POPFRAME"                                        \
+    "\n RETURN"
+
+/*
 #define FUNCTION_READ_STR                                    \
     "\n // Built-in function ifj.readstr"                    \
     "\n LABEL $ifj.readstr"                                  \
@@ -44,7 +61,7 @@ ze standartního vstupu načte jeden řádek ukončený odřádkováním
     "\n LABEL ifj.readstr_end"                               \
     "\n POPFRAME"                                            \
     "\n RETURN"
-
+*/
 /*
 ze standartního vstupu načte jeden řádek ukončený odřádkováním
  nebo koncem souboru (EOF). Vrátí celočíselnou hodnotu

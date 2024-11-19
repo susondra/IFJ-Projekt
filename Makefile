@@ -5,7 +5,7 @@ CC = gcc
 CFLAGS = -Wall -g
 
 # Source Files
-SRC = simulation.c generator.c dynamic_string.c
+SRC = simulation.c src/generator.c src/dynamic_string.c
 
 # Output Executable
 TARGET = simulation

@@ -51,7 +51,7 @@ bool dynamic_string_resize(Dynamic_string *dyn_str, size_t new_capacity)
     return true;
 }
 
-bool dynamic_string_add_char(Dynamic_string *dyn_str, char c)
+bool dynamic_string_add_char(Dynamic_string *dyn_str, const char *src)
 {
     if (dyn_str->length + 1 >= dyn_str->capacity)
     {
