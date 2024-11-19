@@ -1,0 +1,296 @@
+
+#Start of the program
+.IFJCode24
+DEFVAR GF@%temp1
+DEFVAR GF@%temp2
+DEFVAR GF@%temp3
+DEFVAR GF@%exp_result
+JUMP $main
+
+ # Built-in function ifj_readstr
+ LABEL $ifj_readstr
+ PUSHFRAME
+ DEFVAR LF@retval
+ MOVE LF@retval nil@nil
+ DEFVAR LF@input
+ DEFVAR LF@type
+ READ LF@input string
+ TYPE LF@type LF@input
+ JUMPIFNEQ ifj_readstr_end LF@type string@string
+ MOVE LF@retval LF@input
+ LABEL ifj_readstr_end
+ POPFRAME
+ RETURN
+
+ # Built-in function ifj_readi32
+ LABEL $ifj_readi32
+ PUSHFRAME
+ DEFVAR LF@retval
+ MOVE LF@retval nil@nil
+ DEFVAR LF@input
+ DEFVAR LF@type
+ READ LF@input int
+ TYPE LF@type LF@input
+ JUMPIFNEQ ifj_readi32_end LF@type string@int
+ MOVE LF@retval LF@input
+ LABEL ifj_readi32_end
+ POPFRAME
+ RETURN
+
+ # Built-in function ifj_readf64
+ LABEL $ifj_readf64
+ PUSHFRAME
+ DEFVAR LF@retval
+ MOVE LF@retval nil@nil
+ DEFVAR LF@input
+ DEFVAR LF@type
+ READ LF@input float
+ TYPE LF@type LF@input
+ JUMPIFNEQ ifj_readf64_end LF@type string@float
+ MOVE LF@retval LF@input
+ LABEL ifj_readf64_end
+ POPFRAME
+ RETURN
+
+ # Built-in function ifj_write
+ LABEL $ifj_write
+ PUSHFRAME
+ DEFVAR LF@param
+ MOVE LF@param LF@%1
+ DEFVAR LF@type
+ TYPE LF@type LF@param
+ JUMPIFEQ ifj_write_null LF@type string@nil
+ WRITE LF@input
+ JUMP write_end
+ LABEL ifj_write_null
+ WRITE string@null
+ LABEL ifj_write_end
+ POPFRAME
+ RETURN
+
+ # Built-in function ifj_i2f
+ LABEL $ifj_i2f
+ PUSHFRAME
+ DEFVAR LF@param
+ MOVE LF@param LF@%1
+ DEFVAR LF@retval
+ MOVE LF@retval nil@nil
+ DEFVAR LF@type
+ TYPE LF@type LF@param
+ JUMPIFNEQ ifj_i2f_end LF@type string@int
+ INT2FLOAT LF@retval LF@param
+ LABEL ifj_i2f_end
+ POPFRAME
+ RETURN
+
+ # Built-in function ifj_f2i
+ LABEL $ifj_f2i
+ PUSHFRAME
+ DEFVAR LF@param
+ MOVE LF@param LF@%1
+ DEFVAR LF@retval
+ MOVE LF@retval nil@nil
+ DEFVAR LF@type
+ TYPE LF@type LF@param
+ JUMPIFNEQ ifj_f2i_end LF@type string@float
+ INT2FLOAT LF@retval LF@param
+ LABEL ifj_f2i_end
+ POPFRAME
+ RETURN
+
+ # Built-in function ifj_string
+ LABEL $ifj_string
+ PUSHFRAME
+ DEFVAR LF@param
+ DEFVAR LF@retval
+ DEFVAR LF@type
+ MOVE LF@param LF@%1
+ TYPE LF@type LF@parm
+ JUMPIFNEQ ifj_string_end LF@type string@string
+ MOVE LF@retval LF@param
+ LABEL ifj_string_end
+ POPFRAME
+ RETURN
+
+ # Built-in function ifj_length
+ LABEL $ifj_length
+ PUSHFRAME
+ DEFVAR LF@retval
+ DEFVAR LF@param
+ DEFVAR LF@type
+ MOVE LF@param TF@%1
+ TYPE LF@type LF@param
+ JUMPIFNEQ ifj_length_end LF@type string@string
+ STRLEN LF@retval LF@param
+ LABEL ifj_length_end
+ POPFRAME
+ RETURN
+
+ # Built-in function ifj_concat
+ LABEL $ifj_concat
+ PUSHFRAME
+ DEFVAR LF@param1
+ DEFVAR LF@param2
+ DEFVAR LF@retval
+ DEFVAR LF@type
+ MOVE LF@param1 TF@%1
+ MOVE LF@param2 TF@%2l
+ TYPE LF@type LF@param1
+ JUMPIFNEQ ifj_concat_end LF@type string@string
+ TYPE LF@type LF@param2
+ JUMPIFNEQ ifj_concat_end LF@type string@string
+ CONCAT LF@retval LF@param1 LF@param2
+ LABEL ifj_concat_end
+ POPFRAME
+ RETURN
+
+ # Built-in function ifj_substring
+ LABEL $ifj_substring
+ PUSHFRAME
+ DEFVAR LF@param1
+ DEFVAR LF@param2
+ DEFVAR LF@param3
+ DEFVAR LF@retval
+ DEFVAR LF@type
+ DEFVAR LF@is_greater
+ DEFVAR LF@char
+ MOVE LF@retval string@
+ MOVE LF@param1 TF@%1
+ MOVE LF@param2 LF@%2
+ MOVE LF@param3 LF@%3
+ TYPE LF@type LF@param1
+ JUMPIFNEQ ifj_substring_end LF@type string@string
+ TYPE LF@type LF@param2
+ JUMPIFNEQ ifj_substring_end LF@type string@int
+ TYPE LF@type LF@param3
+ JUMPIFNEQ ifj_substring_end LF@type string@int
+ GT LF@is_grater LF@param2 int@0
+ JUMPIFEQ ifj_substring_null LF@is_greater bool@false
+ GT LF@is_grater LF@param3 int@0
+ JUMPIFEQ ifj_substring_null LF@is_greater bool@false
+ GT LF@is_grater LF@param2 LF@param3
+ JUMPIFEQ ifj_substring_null LF@is_greater bool@true
+ DEFVAR LF@strlen
+ CREATEFRAME
+ DEFVAR TF@%1
+ MOVE TF@%1 LF@param1
+ CALL $ifj_strlen
+ MOVE LF@strlen TF@retval
+ GT LF@is_greater LF@param2 LF@strlen
+ DEFVAR LF@is_EQ_GT
+ EQ LF@is_EQ_GT LF@param2 LF@strlen
+ OR LF@is_EQ_GT LF@is_EQ_GT LF@is_greater
+ JUMPIFEQ ifj_substring_null LF@is_EQ_GT bool@true
+ GT LF@is_grater LF@param3 LF@strlen
+ JUMPIFEQ ifj_substring_null LF@is_greater bool@true
+ LABEL ifj_substring_loop
+ JUMPIFEQ ifj_substring_end LF@param2 LF@param3
+ GETCHAR LF@char LF@param1 LF@param2
+ CONCAT LF@retval LF@retval LF@char
+ ADD LF@param2 LF@param2 int@1
+ JUMP ifj_substring_loop
+ LABEL ifj_substring_null
+ MOVE LF@retval nil@nil
+ LABEL ifj_substring_end
+ POPFRAME
+ RETURN
+
+ # Built-in function ifj_strcmp
+ LABEL $ifj_strcmp
+ PUSHFRAME
+ DEFVAR LF@retval
+ DEFVAR LF@param1
+ DEFVAR LF@param2
+ DEFVAR LF@char1
+ DEFVAR LF@char2
+ DEFVAR LF@type
+ DEFVAR LF@index
+ DEFVAR LF@strlen1
+ DEFVAR LF@strlen2
+ DEFVAR LF@bool
+ MOVE LF@index int@0
+ MOVE LF@param1 TF@%1
+ MOVE LF@param2 TF@%2
+ CREATEFRAME
+ DEFVAR TF@%1
+ MOVE TF@%1 LF@param1
+ CALL $ifj_strlen
+ MOVE LF@strlen1 TF@retval
+ CREATEFRAME
+ MOVE TF@%1 LF@param2
+ CALL $ifj_strlen
+ MOVE LF@strlen2 TF@retval
+ TYPE LF@type LF@param1
+ JUMPIFNEQ ifj_strcmp_end LF@type string@string
+ TYPE LF@type LF@param2
+ JUMPIFNEQ ifj_strcmp_end LF@type string@string
+ LABEL ifj_strcmp_loop
+ JUMPIFEQ ifj_strcmp_less LF@index LF@strlen1
+ JUMPIFEQ ifj_strcmp_more LF@index LF@strlen2
+ GETCHAR LF@char1 LF@param1 LF@index
+ GETCHAR LF@char2 LF@param2 LF@index
+ LT LF@bool LF@char1 LF@char2
+ JUMPIFEQ ifj_strcmp_less LF@bool bool@true
+ GT LF@bool LF@char1 LF@char2
+ JUMPIFEQ ifj_strcmp_more LF@bool bool@true
+ ADD LF@index LF@index int@1
+ JUMP ifj_strcmp_loop
+ LABEL ifj_strcmp_less
+ JUMPIFEQ ifj_strcmp_equal LF@index LF@strlen2
+ MOVE LF@retval int@-1
+ JUMP ifj_strcmp_end
+ LABEL ifj_strcmp_more
+ MOVE LF@retval int@1
+ JUMP ifj_strcmp_end
+ LABEL ifj_strcmp_equal
+ MOVE LF@retval int@0
+ LABEL ifj_strcmp_end
+ POPFRAME
+ RETURN
+
+ # Built-in function ifj_ord
+ LABEL $ifj_ord
+ PUSHFRAME
+ DEFVAR LF@retval
+ DEFVAR LF@param1
+ DEFVAR LF@param2
+ DEFVAR LF@strlen
+ DEFVAR LF@bool
+ DEFVAR LF@type
+ MOVE LF@param1 TF@%1
+ MOVE LF@param2 LF@%2
+ MOVE LF@retval int@0
+ TYPE LF@type LF@param1
+ JUMPIFNEQ ifj_ord_end LF@type string@string
+ JUMPIFNEQ ifj_ord_end LF@param1 string@
+ CREATEFRAME
+ MOVE TF@%1 LF@param1
+ CALL $ifj_strlen
+ MOVE LF@strlen TF@retval
+ LT LF@bool LF@param2 LF@strlen
+ JUMPIFEQ ifj_ord_end LF@bool bool@false
+ STRI2INT LF@retval LF@param1 LF@param2
+ LABEL ifj_ord_end
+ POPFRAME
+ RETURN
+
+ # Built-in function ifj_chr
+ LABEL $ifj_chr
+ PUSHFRAME
+ DEFVAR LF@retval
+ DEFVAR LF@param
+ MOVE LF@param LF@%1
+ INT2CHAR LF@retval LF@param
+ LABEL ifj_chr_end
+ POPFRAME
+ RETURN
+
+#Main start
+LABEL $main
+CREATEFRAME
+PUSHFRAME
+
+#Main end
+POPFRAME
+CLEARS
+LABEL $skibidi%1%22

@@ -5,7 +5,7 @@
 
 #define INITIAL_CAPACITY 16
 
-char *filename = "output.txt";
+char *filename = "output.ifjcode";
 
 bool dynamic_string_init(Dynamic_string *dyn_str, const char *filename)
 {
@@ -51,7 +51,7 @@ bool dynamic_string_resize(Dynamic_string *dyn_str, size_t new_capacity)
     return true;
 }
 
-bool dynamic_string_add_char(Dynamic_string *dyn_str, const char *src)
+bool dynamic_string_add_char(Dynamic_string *dyn_str, char c)
 {
     if (dyn_str->length + 1 >= dyn_str->capacity)
     {

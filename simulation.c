@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include "dynamic_string.h"
-#include "generator.h"
-#include "types.h"
+#include "src/dynamic_string.h"
+#include "src/generator.h"
+#include "src/types.h"
 
 int main()
 {
@@ -12,28 +12,24 @@ int main()
     }
 
     gen_header();
+    gen_built_in_function();
 
     gen_main_start();
     gen_main_end();
+    /*
+    st_op = S_PLUS;
 
-    gen_function_start();
-    gen_function_end();
+    gen_stack_operation(st_op);
 
-    op = PLUS;
+    st_op = S_MINUS;
 
-    gen_operation(op);
+    gen_stack_operation(st_op);
 
-    op = MINUS;
+    st_op = S_TIMES;
 
-    gen_operation(op);
-
-    op = TIMES;
-
-    gen_operation(op);
-
+    gen_stack_operation(st_op);
+*/
     gen_label(function_id, label_depth, label_index);
-
-    gen_if_start(function_id);
 
     dynamic_string_write_to_file(&dyn_str, filename);
 

@@ -10,6 +10,8 @@ bool gen_main_start();
 
 bool gen_main_end();
 
+bool gen_built_in_function();
+
 bool gen_label(const char *function_id, int label_depth, int label_index);
 
 bool gen_function_start();
