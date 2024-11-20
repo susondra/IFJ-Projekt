@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "dynamic_string.h": "c",
+        "stdio.h": "c"
+    }
+}

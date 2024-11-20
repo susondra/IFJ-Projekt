@@ -1,13 +1,12 @@
 #include <stdio.h>
 
 #include "dynamic_string.h"
-#include "types.h"
 #include "generator.h"
 #include "built_in_function.h"
 
 Dynamic_string dyn_str;
-operation op;
-stack_operation st_op;
+OPERATOR_TYPE op;
+S_OPERATOR_TYPE st_op;
 const char *function_id = "skibidi";
 int label_depth = 1;
 int label_index = 22;
@@ -143,52 +142,52 @@ bool gen_if_end()
     return true;
 }
 
-bool gen_operation(operation op)
+bool gen_operation(OPERATOR_TYPE op)
 {
     switch (op)
     {
-    case PLUS:
+    case OP_PLUS:
         ADD_LINE("ADD");
         break;
 
-    case MINUS:
+    case OP_MINUS:
         ADD_LINE("SUB");
         break;
 
-    case TIMES:
+    case OP_STAR:
         ADD_LINE("MUL");
         break;
 
-    case DIVIDE:
+    case OP_SLASH:
         ADD_LINE("DIV");
         break;
 
-    case IDIV:
+    case OP_IDIV:
         ADD_LINE("IDIV");
         break;
 
-    case EQUAL:
+    case OP_EQUAL:
         ADD_LINE("EQ");
         break;
 
-    case NOTEQUAL:
+    case OP_NOT_EQUAL:
         ADD_LINE("EQ");
         ADD_LINE("NOT");
         break;
 
-    case LESS:
+    case OP_LESS:
         ADD_LINE("LT");
         break;
 
-    case GREATER:
+    case OP_GREATER:
         ADD_LINE("GT");
         break;
 
-    case LESSOREQUAL:
+    case OP_LESS_EQUAL:
 
         break;
 
-    case GREATEROREQUAL:
+    case OP_GREATER_EQUAL:
 
         break;
 
@@ -199,48 +198,48 @@ bool gen_operation(operation op)
     return true;
 }
 
-bool gen_stack_operation(stack_operation st_op)
+bool gen_stack_operation(S_OPERATOR_TYPE st_op)
 {
     switch (st_op)
     {
-    case S_PLUS:
+    case S_OP_PLUS:
         ADD_LINE("ADDS");
         break;
 
-    case S_MINUS:
+    case S_OP_MINUS:
         ADD_LINE("SUBS");
         break;
 
-    case S_TIMES:
+    case S_OP_STAR:
         ADD_LINE("MULS");
         break;
 
-    case S_DIVIDE:
+    case S_OP_SLASH:
         ADD_LINE("DIVS");
         break;
 
-    case S_IDIV:
+    case S_OP_IDIV:
         ADD_LINE("IDIVS");
         break;
 
-    case S_EQUAL:
+    case S_OP_EQUAL:
         ADD_LINE("EQS");
         break;
 
-    case S_NOTEQUAL:
+    case S_OP_NOT_EQUAL:
         ADD_LINE("EQS");
         ADD_LINE("NOTS");
         break;
 
-    case S_LESS:
+    case S_OP_LESS:
         ADD_LINE("LTS");
         break;
 
-    case S_GREATER:
+    case S_OP_GREATER:
         ADD_LINE("GTS");
         break;
 
-    case S_LESSOREQUAL:
+    case S_OP_LESS_EQUAL:
         ADD_LINE("POPS GF@tmp_2");
         ADD_LINE("POPS GF@tmp_1");
         ADD_LINE("PUSHS GF@tmp_2");
@@ -252,7 +251,7 @@ bool gen_stack_operation(stack_operation st_op)
         ADD_LINE("ORS");
         break;
 
-    case S_GREATEROREQUAL:
+    case S_OP_GREATER_EQUAL:
         ADD_LINE("POPS GF@tmp_op1");
         ADD_LINE("POPS GF@tmp_op2");
         ADD_LINE("PUSHS GF@tmp_op2");

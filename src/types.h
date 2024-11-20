@@ -27,8 +27,6 @@ typedef enum
     GREATEROREQUAL
 } operation;
 
-extern operation op;
-
 typedef enum
 {
     S_PLUS,
@@ -43,8 +41,6 @@ typedef enum
     S_LESSOREQUAL,
     S_GREATEROREQUAL
 } stack_operation;
-
-extern stack_operation st_op;
 
 extern Dynamic_string dyn_str;
 

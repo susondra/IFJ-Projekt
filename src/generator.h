@@ -1,5 +1,5 @@
 #include <stdbool.h>
-#include "types.h"
+#include "tree.h"
 
 #ifndef _GENERATOR_H
 #define _GENERATOR_H
@@ -30,8 +30,8 @@ bool gen_while_start();
 
 bool gen_while_end();
 
-bool gen_operation(operation op);
+bool gen_operation(OPERATOR_TYPE op);
 
-bool gen_stack_operation(stack_operation st_op);
+bool gen_stack_operation(S_OPERATOR_TYPE st_op);
 
 #endif
